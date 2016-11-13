@@ -1,0 +1,7 @@
+vendor/
+coverage/
+
+scripts/
+!scripts/install-composer.sh
+
+.DS_Store

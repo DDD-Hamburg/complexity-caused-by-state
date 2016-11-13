@@ -1,0 +1,25 @@
+{
+    "name": "ddd-hamburg/complexity-caused-by-state",
+    "description": "Example project to show complexity caused by state",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {"DDDHH\\": "src/"}
+    },
+    "config": {
+       "bin-dir": "scripts"
+   },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hauke Stange",
+            "email": "hauke@jimdo.com"
+        },
+        {
+            "name": "Virgilio Lino",
+            "email": "virgilio@posteo.de"
+        }
+    ]
+}
