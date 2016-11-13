@@ -1,4 +1,4 @@
-# Complexity Caused By State
+# Complexity Caused By State [![Build Status](https://travis-ci.org/DDD-Hamburg/complexity-caused-by-state.svg?branch=master)](https://travis-ci.org/DDD-Hamburg/complexity-caused-by-state)
 
 Example code for one of the complexities caused by state as discussed in the [DDD Hamburg Meetup Group](https://www.meetup.com/DDD-HH-Domain-driven-Design-Hamburg/events/234678922/)
 and based on the ideas from the seminal paper ["Out Of The Tar Pit"](https://github.com/papers-we-love/papers-we-love/blob/master/design/out-of-the-tar-pit.pdf)
