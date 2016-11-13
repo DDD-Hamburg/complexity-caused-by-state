@@ -46,6 +46,6 @@ assert(
 $cart->removeItem($itemA);
 
 assert(
-    109.19 == round($calc->total($cart, $discount, $discountedItemIds), 2),
+    109.9 == round($calc->total($cart, $discount, $discountedItemIds), 2),
     'Error calculating discounted total.'
 );
