@@ -7,10 +7,10 @@ use DDDHH\Shop\ShoppingCart;
 interface Repository
 {
     /**
-     * @param string $id
+     * @param CustomerID $id
      * @return ShoppingCart
      */
-    public function findByUserId(string $id): ShoppingCart;
+    public function findByCustomerID(CustomerID $id): ShoppingCart;
 
     /**
      * @param ShoppingCart $cart

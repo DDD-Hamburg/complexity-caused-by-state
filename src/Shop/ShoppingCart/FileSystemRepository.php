@@ -18,10 +18,10 @@ class FileSystemRepository implements Repository
     }
 
     /**
-     * @param string $id
+     * @param CustomerID $id
      * @return ShoppingCart
      */
-    public function findByUserId(string $id): ShoppingCart
+    public function findByCustomerID(CustomerID $id): ShoppingCart
     {
         throw new Exception("not implemented yet");
     }
