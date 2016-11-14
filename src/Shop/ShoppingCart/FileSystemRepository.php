@@ -31,6 +31,12 @@ class FileSystemRepository implements Repository
      */
     public function save(ShoppingCart $cart)
     {
-        file_put_contents($this->storageFile, serialize($cart));
+        if (file_exists($this->storageFile)) {
+            $shoppingCarts = unserialize(file_get_contents($this->storageFile));
+        } else {
+            $shoppingCarts = [];
+        }
+        $shoppingCarts []= $cart;
+        file_put_contents($this->storageFile, serialize($shoppingCarts));
     }
 }

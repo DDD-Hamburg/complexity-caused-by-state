@@ -25,43 +25,32 @@ class FileSystemRepositoryTest extends TestCase
         $repo = new FileSystemRepository(self::STORAGE_FILE);
 
         $expectedItems = [
-            new Item(
-                'AAXX-4711',
-                'A Book',
-                1.99,
-                1
-            ),
-            new Item(
-                'BBZZ-3731',
-                'Another Book',
-                3.99,
-                2
-            ),
-            new Item(
-                'CCYY-4115',
-                'Yet another Book',
-                13.99,
-                3
-            ),
+            new Item('AAXX-4711', 'A Book', 1.99, 1),
+            new Item('BBZZ-3731', 'Another Book', 3.99, 2),
+            new Item('CCYY-4115', 'Yet another Book', 13.99, 3),
         ];
 
-        $cart = new ShoppingCart();
+        $cart1 = new ShoppingCart($expectedItems);
 
-        foreach ($expectedItems as $item) {
-            $cart->addItem($item);
-        }
+        $repo->save($cart1);
 
-        $repo->save($cart);
+        $cart2 = new ShoppingCart($expectedItems);
+
+        $repo->save($cart2);
 
         $storageContent = file_get_contents(self::STORAGE_FILE);
-        $unserializedShoppingCart = unserialize($storageContent);
+        $unserializedCarts = unserialize($storageContent);
 
-        $itemIds = array_map(function ($item) {
-            return $item->id();
-        }, $unserializedShoppingCart->items());
+        $this->assertCount(2, $unserializedCarts);
 
-        foreach ($expectedItems as $expectedItem) {
-            $this->assertContains($expectedItem->id(), $itemIds);
+        foreach ($unserializedCarts as $unserializedCart) {
+            $itemIds = array_map(function ($item) {
+                return $item->id();
+            }, $unserializedCart->items());
+
+            foreach ($expectedItems as $expectedItem) {
+                $this->assertContains($expectedItem->id(), $itemIds);
+            }
         }
     }
 }
