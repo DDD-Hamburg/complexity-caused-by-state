@@ -3,7 +3,7 @@
 namespace DDDHH\Shop\ShoppingCart;
 
 use DDDHH\Shop\ShoppingCart;
-use DDDHH\Shop\CustomerID;
+use DDDHH\Shop\Customer\Id;
 
 use PHPUnit\Framework\TestCase;
 
@@ -18,16 +18,16 @@ class FileSystemRepositoryTest extends TestCase
     {
         $repo = new FileSystemRepository(self::STORAGE_PATH);
 
-        $customerID1 = new CustomerID('AABB-1122');
-        $customerID2 = new CustomerID('BBCC-2233');
+        $customerId1 = new Id('AABB-1122');
+        $customerId2 = new Id('BBCC-2233');
 
         $expectedItems = [
-            (string) $customerID1 => [
+            (string) $customerId1 => [
                 new Item('AAXX-4711', 'A Book', 1.99, 1),
                 new Item('BBZZ-3731', 'Another Book', 3.99, 2),
                 new Item('CCYY-4115', 'Yet another Book', 13.99, 3),
             ],
-            (string) $customerID2 => [
+            (string) $customerId2 => [
                 new Item('XAXX-2711', 'A Book', 1.99, 1),
                 new Item('BXZZ-3231', 'Another Book', 3.99, 2),
                 new Item('CCYX-4112', 'Yet another Book', 13.99, 3),
@@ -35,39 +35,39 @@ class FileSystemRepositoryTest extends TestCase
         ];
 
         $cart1 = new ShoppingCart(
-            $customerID1,
-            $expectedItems[$customerID1->id()]
+            $customerId1,
+            $expectedItems[$customerId1->id()]
         );
 
         $cart2 = new ShoppingCart(
-            $customerID2,
-            $expectedItems[$customerID2->id()]
+            $customerId2,
+            $expectedItems[$customerId2->id()]
         );
 
         $repo->save($cart1);
         $repo->save($cart2);
 
         $unserializedCart1 = unserialize(
-            file_get_contents(join('/', [ self::STORAGE_PATH, $customerID1 ]))
+            file_get_contents(join('/', [ self::STORAGE_PATH, $customerId1 ]))
         );
 
         $unserializedCart2 = unserialize(
-            file_get_contents(join('/', [ self::STORAGE_PATH, $customerID2 ]))
+            file_get_contents(join('/', [ self::STORAGE_PATH, $customerId2 ]))
         );
 
         // The customer's shopping carts are successfully stored
-        $this->assertEquals($customerID1, $unserializedCart1->customerID());
-        $this->assertEquals($customerID2, $unserializedCart2->customerID());
+        $this->assertEquals($customerId1, $unserializedCart1->customerId());
+        $this->assertEquals($customerId2, $unserializedCart2->customerId());
 
-        $expectedItemIds1 = $this->itemIDs($expectedItems[(string) $customerID1]);
-        $returnedItemIds1 = $this->itemIDs($unserializedCart1->items());
+        $expectedItemIds1 = $this->itemIds($expectedItems[(string) $customerId1]);
+        $returnedItemIds1 = $this->itemIds($unserializedCart1->items());
 
         foreach ($expectedItemIds1 as $expectedItemId) {
             $this->assertContains($expectedItemId, $returnedItemIds1);
         }
 
-        $expectedItemIds2 = $this->itemIDs($expectedItems[(string) $customerID2]);
-        $returnedItemIds2 = $this->itemIDs($unserializedCart2->items());
+        $expectedItemIds2 = $this->itemIds($expectedItems[(string) $customerId2]);
+        $returnedItemIds2 = $this->itemIds($unserializedCart2->items());
 
         // The shopping cart's items are successfully stored either
         foreach ($expectedItemIds2 as $expectedItemId) {
@@ -78,33 +78,33 @@ class FileSystemRepositoryTest extends TestCase
     /**
      * @test
      */
-    public function itShouldFindByCustomerID()
+    public function itShouldFindById()
     {
-        $customerID = new CustomerID('AABB-1122');
+        $customerId = new Id('AABB-1122');
         $items = [
             new Item('AAXX-4711', 'A Book', 1.99, 1),
             new Item('BBZZ-3731', 'Another Book', 3.99, 2),
             new Item('CCYY-4115', 'Yet another Book', 13.99, 3),
         ];
         $cart = new ShoppingCart(
-            $customerID,
+            $customerId,
             $items
         );
 
         file_put_contents(
-            join('/', [ self::STORAGE_PATH, $customerID ]),
+            join('/', [ self::STORAGE_PATH, $customerId ]),
             serialize($cart)
         );
 
         $repo = new FileSystemRepository(self::STORAGE_PATH);
 
-        $foundCart = $repo->findByCustomerID($customerID);
+        $foundCart = $repo->findById($customerId);
 
-        $expectedItemIds = $this->itemIDs($items);
-        $foundItemIds = $this->itemIDs($foundCart->items());
+        $expectedItemIds = $this->itemIds($items);
+        $foundItemIds = $this->itemIds($foundCart->items());
 
-        foreach ($expectedItemIds as $expectedItemID) {
-            $this->assertContains($expectedItemID, $foundItemIds);
+        foreach ($expectedItemIds as $expectedItemId) {
+            $this->assertContains($expectedItemId, $foundItemIds);
         }
     }
 
@@ -112,7 +112,7 @@ class FileSystemRepositoryTest extends TestCase
      * @param Item[] $items
      * @return string[]
      */
-    private function itemIDs(array $items): array
+    private function itemIds(array $items): array
     {
         return array_map(function ($item) {
             return $item->id();

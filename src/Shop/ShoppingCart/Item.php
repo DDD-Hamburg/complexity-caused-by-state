@@ -17,7 +17,7 @@ class Item
     private $qty;
 
     /**
-     * @param string $id Unique ID
+     * @param string $id Unique Id
      * @param string $desc Description
      * @param float $ppu Price per unit
      * @param int $qty Quantity

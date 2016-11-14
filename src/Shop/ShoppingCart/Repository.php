@@ -3,16 +3,16 @@
 namespace DDDHH\Shop\ShoppingCart;
 
 use DDDHH\Shop\ShoppingCart;
-use DDDHH\Shop\CustomerID;
+use DDDHH\Shop\Customer\Id;
 
 interface Repository
 {
     /**
-     * @param CustomerID $id
+     * @param Id $id
      * @return ShoppingCart|null
      * @throws \RuntimeException
      */
-    public function findByCustomerID(CustomerID $id);
+    public function findById(Id $id);
 
     /**
      * @param ShoppingCart $cart

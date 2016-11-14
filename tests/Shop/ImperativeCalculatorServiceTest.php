@@ -15,7 +15,7 @@ class ImperativeCalculatorServiceTest extends TestCase
     {
         $calc = new ImperativeCalculatorService();
 
-        $cart = new ShoppingCart(new CustomerID('XXSS-1234'));
+        $cart = new ShoppingCart(new Customer\Id('XXSS-1234'));
         $cart->addItem(new Item(
             'AAXX-4711',
             'Working Effectively with Legacy Code',
@@ -44,7 +44,7 @@ class ImperativeCalculatorServiceTest extends TestCase
     {
         $calc = new ImperativeCalculatorService();
 
-        $cart = new ShoppingCart(new CustomerID('XXSS-1234'));
+        $cart = new ShoppingCart(new Customer\Id('XXSS-1234'));
         $cart->addItem(new Item(
             'AAXX-4711',
             'Working Effectively with Legacy Code',
