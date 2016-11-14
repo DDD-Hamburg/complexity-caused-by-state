@@ -76,6 +76,39 @@ class FileSystemRepositoryTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function itShouldFindByCustomerID()
+    {
+        $customerID = new CustomerID('AABB-1122');
+        $items = [
+            new Item('AAXX-4711', 'A Book', 1.99, 1),
+            new Item('BBZZ-3731', 'Another Book', 3.99, 2),
+            new Item('CCYY-4115', 'Yet another Book', 13.99, 3),
+        ];
+        $cart = new ShoppingCart(
+            $customerID,
+            $items
+        );
+
+        file_put_contents(
+            join('/', [ self::STORAGE_PATH, $customerID ]),
+            serialize($cart)
+        );
+
+        $repo = new FileSystemRepository(self::STORAGE_PATH);
+
+        $foundCart = $repo->findByCustomerID($customerID);
+
+        $expectedItemIds = $this->itemIDs($items);
+        $foundItemIds = $this->itemIDs($foundCart->items());
+
+        foreach ($expectedItemIds as $expectedItemID) {
+            $this->assertContains($expectedItemID, $foundItemIds);
+        }
+    }
+
+    /**
      * @param Item[] $items
      * @return string[]
      */

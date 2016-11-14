@@ -3,6 +3,7 @@
 namespace DDDHH\Shop\ShoppingCart;
 
 use DDDHH\Shop\ShoppingCart;
+use DDDHH\Shop\CustomerID;
 
 class FileSystemRepository implements Repository
 {
@@ -19,11 +20,15 @@ class FileSystemRepository implements Repository
 
     /**
      * @param CustomerID $id
-     * @return ShoppingCart
+     * @return ShoppingCart|null
+     * @throws \RuntimeException
      */
-    public function findByCustomerID(CustomerID $id): ShoppingCart
+    public function findByCustomerID(CustomerID $id)
     {
-        throw new Exception("not implemented yet");
+        if (!file_exists($this->filename($id))) {
+            return null;
+        }
+        return unserialize(file_get_contents($this->filename($id)));
     }
 
     /**
@@ -31,7 +36,27 @@ class FileSystemRepository implements Repository
      */
     public function save(ShoppingCart $cart)
     {
-        $filename = join('/', [ $this->storagePath, $cart->customerID() ]);
-        file_put_contents($filename, serialize($cart));
+        file_put_contents($this->filename($cart), serialize($cart));
+    }
+
+    /**
+     * @param CustomerID|ShoppingCart
+     * @return string
+     * @throws \RuntimeException
+     */
+    private function filename($obj): string
+    {
+        if (!is_object($obj)) {
+            throw \RuntimeException('Wrong argument type!');
+        }
+
+        switch (get_class($obj)) {
+            case 'DDDHH\Shop\CustomerID':
+                return join('/', [ $this->storagePath, $obj ]);
+            case 'DDDHH\Shop\ShoppingCart':
+                return join('/', [ $this->storagePath, $obj->customerID() ]);
+            default:
+                throw \RuntimeException('Wrong argument type!');
+        }
     }
 }
