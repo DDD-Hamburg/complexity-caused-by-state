@@ -6,14 +6,14 @@ use DDDHH\Shop\ShoppingCart\Item;
 
 use PHPUnit\Framework\TestCase;
 
-class CalculatorServiceTest extends TestCase
+class ImperativeCalculatorServiceTest extends TestCase
 {
     /**
      * @test
      */
     public function itShouldCalulateTotal()
     {
-        $calc = new CalculatorService();
+        $calc = new ImperativeCalculatorService();
 
         $cart = new ShoppingCart();
         $cart->addItem(new Item(
@@ -42,7 +42,7 @@ class CalculatorServiceTest extends TestCase
      */
     public function itShouldConsiderDiscounts()
     {
-        $calc = new CalculatorService();
+        $calc = new ImperativeCalculatorService();
 
         $cart = new ShoppingCart();
         $cart->addItem(new Item(

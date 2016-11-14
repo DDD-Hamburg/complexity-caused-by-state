@@ -8,9 +8,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use DDDHH\Shop\ShoppingCart;
 use DDDHH\Shop\ShoppingCart\Item;
-use DDDHH\Shop\CalculatorService;
+use DDDHH\Shop\ImperativeCalculatorService;
 
-$calc = new CalculatorService();
+$calc = new ImperativeCalculatorService();
 $cart = new ShoppingCart();
 
 $itemA = new Item(
