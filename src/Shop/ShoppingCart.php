@@ -6,14 +6,19 @@ use DDDHH\Shop\ShoppingCart\Item;
 
 class ShoppingCart
 {
+    /** @var CustomerID */
+    private $customerID;
+
     /** @var Items[] */
     private $items;
 
     /**
+     * @param CustomerID $customerID
      * @param Items[] $item
      */
-    public function __construct(array $items = [])
+    public function __construct(CustomerID $customerID, array $items = [])
     {
+        $this->customerID = $customerID;
         $this->items = $items;
     }
 
@@ -41,5 +46,13 @@ class ShoppingCart
     public function items(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @return CustomerID
+     */
+    public function customerID(): CustomerID
+    {
+        return $this->customerID;
     }
 }

@@ -3,6 +3,7 @@
 namespace DDDHH\Shop\ShoppingCart;
 
 use DDDHH\Shop\ShoppingCart;
+use DDDHH\Shop\CustomerID;
 
 use PHPUnit\Framework\TestCase;
 
@@ -30,11 +31,11 @@ class FileSystemRepositoryTest extends TestCase
             new Item('CCYY-4115', 'Yet another Book', 13.99, 3),
         ];
 
-        $cart1 = new ShoppingCart($expectedItems);
+        $cart1 = new ShoppingCart(new CustomerID('XXSS-1234'), $expectedItems);
 
         $repo->save($cart1);
 
-        $cart2 = new ShoppingCart($expectedItems);
+        $cart2 = new ShoppingCart(new CustomerID('XXSS-1234'), $expectedItems);
 
         $repo->save($cart2);
 
