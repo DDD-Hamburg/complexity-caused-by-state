@@ -13,7 +13,7 @@ class ShoppingCartTest extends TestCase
      */
     public function itShouldAddRetrieveAndDeleteItem()
     {
-        $cart = new ShoppingCart();
+        $cart = new ShoppingCart(new CustomerID('XXSS-1234'));
 
         $item = new Item(
             'AAXX-4711',
@@ -55,11 +55,22 @@ class ShoppingCartTest extends TestCase
             ),
         ];
 
-        $cart = new ShoppingCart($expectedItems);
+        $cart = new ShoppingCart(new CustomerID('XXSS-1234'), $expectedItems);
         $items = $cart->items();
 
         foreach ($expectedItems as $expectedItem) {
             $this->assertContains($expectedItem, $items);
         }
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldInitializeWithCustomerID()
+    {
+        $customerID = new CustomerID('BBCC-8342');
+        $cart = new ShoppingCart($customerID);
+
+        $this->assertEquals($customerID, $cart->customerID());
     }
 }
