@@ -1,24 +1,24 @@
 <?php
 
-namespace DDDHH\Shop;
+namespace DDDHH\Shop\Cart;
 
-use DDDHH\Shop\ShoppingCart\Item;
+use DDDHH\Shop\Customer;
 
-class ShoppingCart
+class Cart
 {
-    /** @var CustomerID */
-    private $customerID;
+    /** @var Customer\Id */
+    private $customerId;
 
     /** @var Items[] */
     private $items;
 
     /**
-     * @param CustomerID $customerID
+     * @param Customer\Id $customerId
      * @param Items[] $item
      */
-    public function __construct(CustomerID $customerID, array $items = [])
+    public function __construct(Customer\Id $customerId, array $items = [])
     {
-        $this->customerID = $customerID;
+        $this->customerId = $customerId;
         $this->items = $items;
     }
 
@@ -49,10 +49,10 @@ class ShoppingCart
     }
 
     /**
-     * @return CustomerID
+     * @return Customer\Id
      */
-    public function customerID(): CustomerID
+    public function customerId(): Customer\Id
     {
-        return $this->customerID;
+        return $this->customerId;
     }
 }

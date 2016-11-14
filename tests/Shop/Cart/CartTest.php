@@ -1,19 +1,19 @@
 <?php
 
-namespace DDDHH\Shop;
+namespace DDDHH\Shop\Cart;
 
-use DDDHH\Shop\ShoppingCart\Item;
+use DDDHH\Shop\Customer;
 
 use PHPUnit\Framework\TestCase;
 
-class ShoppingCartTest extends TestCase
+class CartTest extends TestCase
 {
     /**
      * @test
      */
     public function itShouldAddRetrieveAndDeleteItem()
     {
-        $cart = new ShoppingCart(new CustomerID('XXSS-1234'));
+        $cart = new Cart(new Customer\Id('XXSS-1234'));
 
         $item = new Item(
             'AAXX-4711',
@@ -55,7 +55,7 @@ class ShoppingCartTest extends TestCase
             ),
         ];
 
-        $cart = new ShoppingCart(new CustomerID('XXSS-1234'), $expectedItems);
+        $cart = new Cart(new Customer\Id('XXSS-1234'), $expectedItems);
         $items = $cart->items();
 
         foreach ($expectedItems as $expectedItem) {
@@ -66,11 +66,11 @@ class ShoppingCartTest extends TestCase
     /**
      * @test
      */
-    public function itShouldInitializeWithCustomerID()
+    public function itShouldInitializeWithId()
     {
-        $customerID = new CustomerID('BBCC-8342');
-        $cart = new ShoppingCart($customerID);
+        $customerId = new Customer\Id('BBCC-8342');
+        $cart = new Cart($customerId);
 
-        $this->assertEquals($customerID, $cart->customerID());
+        $this->assertEquals($customerId, $cart->customerId());
     }
 }

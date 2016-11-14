@@ -1,6 +1,6 @@
 <?php
 
-namespace DDDHH\Shop\ShoppingCart;
+namespace DDDHH\Shop\Cart;
 
 use PHPUnit\Framework\TestCase;
 

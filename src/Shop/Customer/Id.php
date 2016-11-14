@@ -1,8 +1,8 @@
 <?php
 
-namespace DDDHH\Shop;
+namespace DDDHH\Shop\Customer;
 
-class CustomerID
+class Id
 {
     /** @var string */
     private $id;

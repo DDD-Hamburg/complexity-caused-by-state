@@ -2,7 +2,8 @@
 
 namespace DDDHH\Shop;
 
-use DDDHH\Shop\ShoppingCart\Item;
+use DDDHH\Shop\Cart\Cart;
+use DDDHH\Shop\Cart\Item;
 
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +16,7 @@ class ImperativeCalculatorServiceTest extends TestCase
     {
         $calc = new ImperativeCalculatorService();
 
-        $cart = new ShoppingCart(new CustomerID('XXSS-1234'));
+        $cart = new Cart(new Customer\Id('XXSS-1234'));
         $cart->addItem(new Item(
             'AAXX-4711',
             'Working Effectively with Legacy Code',
@@ -44,7 +45,7 @@ class ImperativeCalculatorServiceTest extends TestCase
     {
         $calc = new ImperativeCalculatorService();
 
-        $cart = new ShoppingCart(new CustomerID('XXSS-1234'));
+        $cart = new Cart(new Customer\Id('XXSS-1234'));
         $cart->addItem(new Item(
             'AAXX-4711',
             'Working Effectively with Legacy Code',
