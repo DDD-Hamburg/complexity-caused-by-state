@@ -7,14 +7,14 @@ use DDDHH\Shop\ShoppingCart;
 class FileSystemRepository implements Repository
 {
     /** @var string */
-    private $storageFile = '';
+    private $storagePath = '';
 
     /**
-     * @param string $storageFile
+     * @param string $storagePath
      */
-    public function __construct(string $storageFile)
+    public function __construct(string $storagePath)
     {
-        $this->storageFile = $storageFile;
+        $this->storagePath = $storagePath;
     }
 
     /**
@@ -31,12 +31,7 @@ class FileSystemRepository implements Repository
      */
     public function save(ShoppingCart $cart)
     {
-        if (file_exists($this->storageFile)) {
-            $shoppingCarts = unserialize(file_get_contents($this->storageFile));
-        } else {
-            $shoppingCarts = [];
-        }
-        $shoppingCarts []= $cart;
-        file_put_contents($this->storageFile, serialize($shoppingCarts));
+        $filename = join('/', [ $this->storagePath, $cart->customerID() ]);
+        file_put_contents($filename, serialize($cart));
     }
 }
