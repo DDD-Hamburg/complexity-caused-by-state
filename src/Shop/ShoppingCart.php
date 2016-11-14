@@ -10,6 +10,14 @@ class ShoppingCart
     private $items;
 
     /**
+     * @param Items[] $item
+     */
+    public function __construct(array $items = [])
+    {
+        $this->items = $items;
+    }
+
+    /**
      * @param Item $item
      */
     public function addItem(Item $item)
