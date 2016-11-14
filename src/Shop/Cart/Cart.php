@@ -1,10 +1,10 @@
 <?php
 
-namespace DDDHH\Shop;
+namespace DDDHH\Shop\Cart;
 
-use DDDHH\Shop\ShoppingCart\Item;
+use DDDHH\Shop\Customer;
 
-class ShoppingCart
+class Cart
 {
     /** @var Customer\Id */
     private $customerId;

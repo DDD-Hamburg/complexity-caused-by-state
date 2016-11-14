@@ -6,13 +6,13 @@ namespace DDDHH;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use DDDHH\Shop\ShoppingCart;
+use DDDHH\Shop\Cart\Cart;
 use DDDHH\Shop\Customer\Id;
-use DDDHH\Shop\ShoppingCart\Item;
+use DDDHH\Shop\Cart\Item;
 use DDDHH\Shop\ImperativeCalculatorService;
 
 $calc = new ImperativeCalculatorService();
-$cart = new ShoppingCart(new Id('XXSS-1234'));
+$cart = new Cart(new Id('XXSS-1234'));
 
 $itemA = new Item(
     'AAXX-4711',

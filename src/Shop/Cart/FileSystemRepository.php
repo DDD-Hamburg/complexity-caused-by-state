@@ -1,9 +1,9 @@
 <?php
 
-namespace DDDHH\Shop\ShoppingCart;
+namespace DDDHH\Shop\Cart;
 
-use DDDHH\Shop\ShoppingCart;
-use DDDHH\Shop\Customer\Id;
+use DDDHH\Shop\Cart\Cart;
+use DDDHH\Shop\Customer;
 
 class FileSystemRepository implements Repository
 {
@@ -19,11 +19,11 @@ class FileSystemRepository implements Repository
     }
 
     /**
-     * @param Id $id
+     * @param Customer\Id $id
      * @return ShoppingCart|null
      * @throws \RuntimeException
      */
-    public function findById(Id $id)
+    public function findById(Customer\Id $id)
     {
         if (!file_exists($this->filename($id))) {
             return null;
@@ -34,13 +34,13 @@ class FileSystemRepository implements Repository
     /**
      * @param ShoppingCart $cart
      */
-    public function save(ShoppingCart $cart)
+    public function save(Cart $cart)
     {
         file_put_contents($this->filename($cart), serialize($cart));
     }
 
     /**
-     * @param Id|ShoppingCart
+     * @param Customer\Id|ShoppingCart
      * @return string
      * @throws \RuntimeException
      */
@@ -53,10 +53,10 @@ class FileSystemRepository implements Repository
         switch (get_class($obj)) {
             case 'DDDHH\Shop\Customer\Id':
                 return join('/', [ $this->storagePath, $obj ]);
-            case 'DDDHH\Shop\ShoppingCart':
+            case 'DDDHH\Shop\Cart\Cart':
                 return join('/', [ $this->storagePath, $obj->customerId() ]);
             default:
-                throw \RuntimeException('Wrong argument type!');
+                throw new \RuntimeException('Wrong argument type!');
         }
     }
 }

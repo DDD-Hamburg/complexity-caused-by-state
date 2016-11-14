@@ -1,8 +1,7 @@
 <?php
 
-namespace DDDHH\Shop\ShoppingCart;
+namespace DDDHH\Shop\Cart;
 
-use DDDHH\Shop\ShoppingCart;
 use DDDHH\Shop\Customer\Id;
 
 use PHPUnit\Framework\TestCase;
@@ -34,12 +33,12 @@ class FileSystemRepositoryTest extends TestCase
             ]
         ];
 
-        $cart1 = new ShoppingCart(
+        $cart1 = new Cart(
             $customerId1,
             $expectedItems[$customerId1->id()]
         );
 
-        $cart2 = new ShoppingCart(
+        $cart2 = new Cart(
             $customerId2,
             $expectedItems[$customerId2->id()]
         );
@@ -86,7 +85,7 @@ class FileSystemRepositoryTest extends TestCase
             new Item('BBZZ-3731', 'Another Book', 3.99, 2),
             new Item('CCYY-4115', 'Yet another Book', 13.99, 3),
         ];
-        $cart = new ShoppingCart(
+        $cart = new Cart(
             $customerId,
             $items
         );
