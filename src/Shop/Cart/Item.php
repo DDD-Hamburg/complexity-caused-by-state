@@ -49,4 +49,17 @@ class Item
     {
         return $this->qty;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray() {
+        return [
+            'id' => $this->id(),
+            'desc' => $this->description(),
+            'pricePerUnit' => $this->pricePerUnit(),
+            'quantity' => $this->quantity(),
+        ];
+    }
+
 }

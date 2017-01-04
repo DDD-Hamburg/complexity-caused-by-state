@@ -12,6 +12,19 @@ $ git clone git@github.com:DDD-Hamburg/complexity-caused-by-state.git
 
 # Install composer and project dependencies
 $ make bootstrap
+
+You will need also to install Elixir and the Phoenix Framework
+
+http://elixir-lang.org/install.html
+
+After Elixir is installed, you can proceed by following those steps:
+
+$ wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+$ sudo apt-get update
+$ sudo apt-get install esl-erlang
+$ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
+
+If you encounter any problem, please go here http://www.phoenixframework.org/docs/installation
 ```
 
 ## General Information
