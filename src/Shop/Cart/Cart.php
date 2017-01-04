@@ -14,7 +14,7 @@ class Cart
 
     /**
      * @param Customer\Id $customerId
-     * @param Items[] $item
+     * @param Item[] $item
      */
     public function __construct(Customer\Id $customerId, array $items = [])
     {

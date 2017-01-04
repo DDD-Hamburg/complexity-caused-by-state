@@ -10,7 +10,7 @@ class ImperativeCalculatorService implements CalculatorService
     private $discountActive = false;
 
     /**
-     * @param ShoppingCart $cart
+     * @param Cart $cart
      * @param float $discount
      * @param string[] $discountedItemIds
      * @return float
