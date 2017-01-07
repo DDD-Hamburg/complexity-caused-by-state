@@ -20,7 +20,9 @@ $calculators = [
     new ImperativeCalculatorService(),
     new FunctionalCalculatorService(),
     new FunctionalCalculatorService2(),
-    new ExternalCalculatorService(),
+    new ExternalCalculatorService(
+        new Shop\ExternalCalculatorService\ElixirPort(), new Shop\ExternalCalculatorService\JsonAdapter()
+    ),
 ];
 
 $discountedItem = new Item('AAXX-4711', 'Working Effectively with Legacy Code', 47.95, 1);

@@ -2,17 +2,15 @@
 
 namespace DDDHH\Shop;
 
+use DDDHH\Hexagon\Hexagon;
 use DDDHH\Shop\Cart\Cart;
-use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Exception\RequestException;
 
-class ExternalCalculatorService implements CalculatorService
+class ExternalCalculatorService extends Hexagon
+    implements CalculatorService
 {
-    const KEY_CART = 'cart';
-    const KEY_DISCOUNT = 'discount';
-    const KEY_DISCOUNTED_ITEM_IDS = 'discountedItemIds';
+    const KEY_CART = "cart";
+    const KEY_DISCOUNT = "discount";
+    const KEY_DISCOUNTED_ITEM_IDS = "discountedItemIds";
 
     /**
      * @return array
@@ -31,26 +29,6 @@ class ExternalCalculatorService implements CalculatorService
     }
 
     /**
-     * @param $params
-     * @return ResponseInterface
-     */
-    private function sendRequest($params) {
-        $client = new Client();
-
-        try {
-            $response = $client->request('POST', 'http://localhost:4000/api/total', [
-                'form_params' => $params
-            ]);
-            return $response;
-        } catch (RequestException $e) {
-            echo Psr7\str($e->getRequest());
-            if ($e->hasResponse()) {
-                echo Psr7\str($e->getResponse());
-            }
-        }
-    }
-
-    /**
      * @param Cart $cart
      * @param float $discount
      * @param string[] $discountedItemIds
@@ -59,9 +37,8 @@ class ExternalCalculatorService implements CalculatorService
     public function total(Cart $cart, float $discount = 1.0, array $discountedItemIds = []): float
     {
         $params = $this->prepareParams($cart->items(), $discount, $discountedItemIds);
-        $response = $this->sendRequest($params);
-        $unencoded = \GuzzleHttp\json_decode($response->getBody());
+        $response = $this->port->request($params);
 
-        return $unencoded;
+        return $this->adapter->response($response);
     }
 }
