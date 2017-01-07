@@ -1,3 +1,6 @@
 [submodule "complexity-elixir"]
 	path = complexity-elixir
 	url = https://github.com/virgiliolino/complexity-elixir
+[submodule "src/Shop/ExternalCalculatorService/Elixir"]
+	path = src/Shop/ExternalCalculatorService/Elixir
+	url = https://github.com/virgiliolino/complexity-elixir
