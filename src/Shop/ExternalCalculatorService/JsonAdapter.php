@@ -3,12 +3,13 @@
 namespace DDDHH\Shop\ExternalCalculatorService;
 
 use DDDHH\Hexagon\Adapter;
+use Psr\Http\Message\ResponseInterface;
 
 class JsonAdapter extends Adapter
 {
-    public function response($content)
+    public function response(ResponseInterface $content)
     {
-        return \GuzzleHttp\json_decode($content);
+        return \GuzzleHttp\json_decode($content->getBody());
     }
 
 }

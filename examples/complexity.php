@@ -12,17 +12,28 @@ use DDDHH\Shop\Customer\Id;
 use DDDHH\Shop\Cart\Item;
 use DDDHH\Shop\ExternalCalculatorService;
 use DDDHH\Shop\FunctionalCalculatorService;
-use DDDHH\Shop\FunctionalCalculatorService2;
+use DDDHH\Shop\BrokenFunctionalCalculatorService;
 use DDDHH\Shop\ImperativeCalculatorService;
+use GuzzleHttp\Psr7\Request;
+
+$elixirRequest = new Request('POST', 'http://localhost:4000/api/total');
+$haskellRequest = new Request(
+    'POST', 'http://localhost:3000/cart',
+    [ 'Content-Type' => 'application/json', ]
+);
 
 /** @var CalculatorService[] $calculators */
 $calculators = [
     new ImperativeCalculatorService(),
     new FunctionalCalculatorService(),
-    new FunctionalCalculatorService2(),
+    new BrokenFunctionalCalculatorService(),
     new ExternalCalculatorService(
-        new Shop\ExternalCalculatorService\ElixirPort(), new Shop\ExternalCalculatorService\JsonAdapter()
+        new Shop\ExternalCalculatorService\GenericPort($elixirRequest), new Shop\ExternalCalculatorService\JsonAdapter()
     ),
+    new BrokenFunctionalCalculatorService(),
+    new ExternalCalculatorService(
+        new Shop\ExternalCalculatorService\JsonPort($haskellRequest), new Shop\ExternalCalculatorService\JsonAdapter()
+    )
 ];
 
 $discountedItem = new Item('AAXX-4711', 'Working Effectively with Legacy Code', 47.95, 1);

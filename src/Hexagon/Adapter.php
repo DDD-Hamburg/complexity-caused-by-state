@@ -2,6 +2,11 @@
 
 namespace DDDHH\Hexagon;
 
+use Psr\Http\Message\ResponseInterface;
+
 abstract class Adapter {
-    abstract public function response($content);
+    /**
+     * @param ResponseInterface $content
+     */
+    abstract public function response(ResponseInterface $content);
 }
