@@ -2,8 +2,26 @@
 
 namespace DDDHH\Hexagon;
 
-abstract class Port {
-    protected $adapter;
+use \Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
-    abstract public function request(array $request = []);
+abstract class Port {
+    /** @var  RequestInterface */
+    protected $request;
+
+    /**
+     * Port constructor.
+     * @param RequestInterface $request
+     */
+    public function __construct(RequestInterface $request)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @param PortMapper $mapper
+     * @return ResponseInterface
+     */
+    abstract public function send(PortMapper $mapper) : ResponseInterface;
+
 }

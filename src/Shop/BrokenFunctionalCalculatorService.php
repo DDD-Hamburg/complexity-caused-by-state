@@ -5,7 +5,7 @@ namespace DDDHH\Shop;
 use DDDHH\Shop\Cart\Cart;
 use DDDHH\Shop\Cart\Item;
 
-class FunctionalCalculatorService2 implements CalculatorService
+class BrokenFunctionalCalculatorService implements CalculatorService
 {
     /**
      * @param Cart $cart
