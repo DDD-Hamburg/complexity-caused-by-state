@@ -13,18 +13,23 @@ $ git clone git@github.com:DDD-Hamburg/complexity-caused-by-state.git
 # Install composer and project dependencies
 $ make bootstrap
 
-You will need also to install Elixir and the Phoenix Framework
+## The experiment
 
-http://elixir-lang.org/install.html
+Have a look the `examples` folder to get a grasp of the problem caused by state.
+We created different Calculators to solve a very simple calculation problem that leads to common errors.
 
-After Elixir is installed, you can proceed by following those steps:
+```
+$ php examples/complexity-caused-by-state.php
 
-$ wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
-$ sudo apt-get update
-$ sudo apt-get install esl-erlang
-$ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
+```
+The script will iterate for every Calculator and validate the results.
 
-If you encounter any problem, please go here http://www.phoenixframework.org/docs/installation
+To be able to fully test every calculator you'll need:
+1. Full working environment in Elixir with Phoenix
+2. Checkout https://github.com/DDD-Hamburg/complexity-elixir and follow the instructions in the repository to make it work
+3. Full working environment in Haskell
+4. Checkout https://github.com/DDD-Hamburg/complexity-haskell and follow the instructions in the repository to make it work
+
 ```
 
 ## General Information
@@ -38,10 +43,3 @@ tests        Execute test suite and create code coverage report
 update       Update composer packages
 ```
 
-## Examples
-
-Have a look the `examples` folder to get a grasp of the problem caused by state.
-
-```
-$ php examples/complexity-caused-by-state.php
-```
