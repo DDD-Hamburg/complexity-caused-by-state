@@ -19,7 +19,7 @@ Have a look the `examples` folder to get a grasp of the problem caused by state.
 We created different Calculators to solve a very simple calculation problem that leads to common errors.
 
 ```
-$ php examples/complexity-caused-by-state.php
+$ php tool/evaluate_complexity.php
 
 ```
 The script will iterate for every Calculator and validate the results.
