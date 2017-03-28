@@ -25,16 +25,14 @@ $haskellRequest = new Request(
 /** @var CalculatorService[] $calculators */
 $calculators = [
     new ImperativeCalculatorService(),
-    new FunctionalCalculatorService(),
-    new BrokenFunctionalCalculatorService(),
     new ExternalCalculatorService(
         new Shop\ExternalCalculatorService\GenericPort($elixirRequest), new Shop\ExternalCalculatorService\JsonAdapter()
     ),
-    new BrokenFunctionalCalculatorService(),
     new ExternalCalculatorService(
         new Shop\ExternalCalculatorService\JsonPort($haskellRequest), new Shop\ExternalCalculatorService\JsonAdapter()
     )
 ];
+
 
 $discountedItem = new Item('AAXX-4711', 'Working Effectively with Legacy Code', 47.95, 1);
 $undiscountedItem = new Item('BBZZ-0815','Domain-Driven Design', 54.95, 2);
@@ -66,16 +64,20 @@ class CartComplexityEvaluator
             echo "\n --------------------------------------------------------------------- \n";
             echo "\n Testing " . get_class($calculator) . "\n";
             echo "\n --------------------------------------------------------------------- \n";
-            $this->itShouldConsiderTotal($calculator);
-            $this->itShouldConsiderDiscount($calculator);
-            $this->itShouldNotHoldState($calculator);
+            try {
+                $this->itShouldConsiderTotal($calculator);
+                $this->itShouldConsiderDiscount($calculator);
+                $this->itShouldNotHoldState($calculator);
+            } catch (\RuntimeException $ex) {
+                $this->error("The service is not active");
+            }
         }
     }
 
     private function itShouldConsiderTotal(CalculatorService $calculatorService)
     {
 
-        echo "add undiscounted item to the cart -> the calculation should be 54.95 x 2 without any discount \n";
+        echo "add undiscounted item to the cart -> the calculation should be 54.95 x 2 without any discount";
         $cart = $this->generateNewShoppingCart();
         $cart->addItem($this->undiscountedItem);
         $expected = 109.9;
@@ -85,7 +87,7 @@ class CartComplexityEvaluator
 
     private function itShouldConsiderDiscount(CalculatorService $calculatorService)
     {
-        echo "add both a discounted and undiscounted item to the cart -> the calculation should be 54.95 x 2 + 47.95 - discount \n";
+        echo "add both a discounted and undiscounted item to the cart -> the calculation should be 54.95 x 2 + 47.95 - discount";
         $cart = $this->generateNewShoppingCart();
         $cart->addItem($this->undiscountedItem);
         $cart->addItem($this->discountedItem);
@@ -100,7 +102,7 @@ class CartComplexityEvaluator
 
     private function itShouldNotHoldState(CalculatorService $calculatorService)
     {
-        echo "add a discounted and undiscounted item. Before calculating the total we remove the discounted item, the result should be undiscounted  \n";
+        echo "add a discounted and undiscounted item. Before calculating the total we remove the discounted item, the result should be undiscounted";
         $cart = $this->generateNewShoppingCart();
         $cart->addItem($this->undiscountedItem);
         $cart->addItem($this->discountedItem);
@@ -126,8 +128,21 @@ class CartComplexityEvaluator
     private function assertEqual($expected, $actual, $errorMessage)
     {
         if ($expected !== $actual) {
-            echo "\033[01;31m  {$errorMessage} exptected: {$expected} actual: {$actual} \e[0m \n";
+            $message = "{$errorMessage} exptected: {$expected} actual: {$actual}";
+            $this->error($message);
+        } else {
+            $this->ok();
         }
+    }
+
+    private function error($message)
+    {
+        echo "\033[01;31m {$message} \e[0m \n";
+    }
+
+    private function ok()
+    {
+        echo "\033[01;32m  .... OK \e[0m \n";
     }
 }
 
